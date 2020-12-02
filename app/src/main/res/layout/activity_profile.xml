@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.sammymanunggal.tugasBesarPBP.model.ProfileActivity">
+
+      
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:orientation="vertical"
+        android:background="@color/gradStart">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_account_circle_24"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:id="@+id/imgProfile"/>
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:text="Take Photo"
+            android:textSize="10dp"
+            android:id="@+id/takePhoto"
+            android:backgroundTint="@color/grey"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/id_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/hind_siliguri_bold"
+            android:text="Username"
+            android:textColor="@color/grey"
+            android:textSize="35dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/hind_siliguri_semibold"
+        android:text="Nama"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_nama_layout"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        app:errorEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/profile_nama"
+            android:inputType="number"
+            android:autofillHints=""
+            android:hint="Nama"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:fontFamily="@font/hind_siliguri_semibold"
+        android:text="Alamat"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_alamat_layout"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        app:errorEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/profile_alamat"
+            android:inputType="number"
+            android:autofillHints=""
+            android:hint="Nama"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:fontFamily="@font/hind_siliguri_semibold"
+        android:text="No. Hp"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_nohp_layout"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        app:errorEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/profile_nohp"
+            android:inputType="number"
+            android:autofillHints=""
+            android:hint="Nama"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp">
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="@color/black"
+            android:text="Back"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:backgroundTint="@color/black"
+            android:layout_marginLeft="10dp"
+            android:textColor="#FFFFFF"
+            android:text="Save"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_signout"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="end"
+        android:layout_marginRight="32dp"
+        android:drawableLeft="@drawable/ic_baseline_arrow_back_24"
+        android:fontFamily="@font/hind_siliguri_bold"
+        android:text="Sign Out"
+        android:backgroundTint="@color/grey"
+        android:textColor="#0d7377"
+        android:textSize="15dp" />
+
+</LinearLayout>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="msm"
+            type="com.sammymanunggal.tugasBesarPBP.model.Museum"/>
+        <variable
+            name="activity"
+            type="com.sammymanunggal.tugasBesarPBP.model.MuseumInformationFragment" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#FFFFFF">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:orientation="vertical"
+                android:paddingBottom="200px"
+                android:id="@+id/ParendAdapter">
+
+                <ImageView
+                    android:id="@+id/item_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:src="@{msm.imgURL}"
+                    app:profileImage="@{msm.imgURL}"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="aaaaa"
+                    android:text="@{msm.nama}"
+                    style="@style/TextAppearance.MaterialComponents.Headline4"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{msm.alamat}"
+                    android:layout_marginBottom="20px"
+                    android:hint="Alamat"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
+                    android:layout_marginBottom="20px"
+                    android:text="@{msm.hariBuka}"
+                    android:hint="Hari Buka"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_access_time_24"
+                        android:text="@{msm.jamBuka}"
+                        android:hint="Jam Buka"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+
+                    <TextView
+                        android:id="@+id/harga"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="@{msm.stringHarga}"
+                        android:hint="Harga"
+                        android:drawableLeft="@drawable/tiket"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="#A2D9CE"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle1"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#B3B2B2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{msm.penjelasan}"
+                    android:layout_marginTop="20dp"
+                    android:hint="Isi content"
+                    style="@style/TextAppearance.MaterialComponents.Body1"/>
+
+<!--                <Button-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    android:text="Beli Tiket"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:onClick="@{activity.beli_tiket}"/>-->
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/colorAccent"
+                    android:backgroundTint="@color/design_default_color_secondary"
+                    android:onClick="@{activity.Arahkan}"
+                    android:text="ARAH KAN KE MUSEUM"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:onClick="@{activity.btnBackMuseum}"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="30dp"
+                    android:background="#EF4949"
+                    android:backgroundTint="#C32525"
+                    android:backgroundTintMode="add"
+                    android:text="Back"
+                    android:textSize="10dp" />
+
+            </LinearLayout>
+
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+</layout>
+

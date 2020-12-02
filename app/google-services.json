@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "191580540616",
+    "firebase_url": "https://tugasbesarpbp-b392a.firebaseio.com",
+    "project_id": "tugasbesarpbp-b392a",
+    "storage_bucket": "tugasbesarpbp-b392a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191580540616:android:8b77d91eb2e18c9d965ffd",
+        "android_client_info": {
+          "package_name": "com.sammymanunggal.TugasBesarPBP"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191580540616-emvdrfa528lkh14l22nsv382o3s7caco.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1wHf9hong1FL_QTf0SgRS7MTZVnicKhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191580540616-emvdrfa528lkh14l22nsv382o3s7caco.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
