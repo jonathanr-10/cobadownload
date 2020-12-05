@@ -3,28 +3,31 @@ package com.sammymanunggal.tugasBesarPBP.model.SignUpIn;
 import androidx.room.ColumnInfo;
 import androidx.room.PrimaryKey;
 import androidx.room.Entity;
+
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 @Entity
 public class Preferensi implements Serializable {
-    @PrimaryKey (autoGenerate = true)
+    @SerializedName("id")
     public int id;
 
-    @ColumnInfo(name = "nama")
+    @SerializedName("nama")
     public String nama;
 
-    @ColumnInfo(name = "address")
+    @SerializedName("alamat")
     public String address;
 
-    @ColumnInfo(name = "email")
+    @SerializedName("email")
     public String emailPreferensi;
 
-    @ColumnInfo(name = "password")
+    @SerializedName("password")
     public String passwordPreferensi;
 
-    @ColumnInfo(name = "phoneNumber")
+    @SerializedName("nohp")
     public String phoneNumber;
 
-    @ColumnInfo(name = "imgURI")
+    @SerializedName("image")
     public String imgURI;
 
     public String getImgURI() { return imgURI; }

@@ -23,6 +23,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.sammymanunggal.tugasBesarPBP.R;
 import com.sammymanunggal.tugasBesarPBP.database.DatabaseClientPreferensi;
 import com.sammymanunggal.tugasBesarPBP.model.MainActivity;
+import com.sammymanunggal.tugasBesarPBP.model.admin.ApiClient;
+import com.sammymanunggal.tugasBesarPBP.model.admin.ApiInterface;
+import com.sammymanunggal.tugasBesarPBP.model.admin.CreateNewsActivity;
+import com.sammymanunggal.tugasBesarPBP.model.admin.NewsResponse;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class SignUp extends AppCompatActivity {
     TextInputEditText emailText, passwordText, nameText, addressText, phoneNumberText;
@@ -101,46 +108,26 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
-    private void addUser() {
-        final String email = emailText.getText().toString();
-        final String pwd = passwordText.getText().toString();
-        final String nama = nameText.getText().toString();
-        final String address = addressText.getText().toString();
-        final String number = phoneNumberText.getText().toString();
+    private void addUser(){
+        String image="";
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<PreferensiResponse> add = apiService.createUser(nameText.getText().toString(),
+                emailText.getText().toString(),passwordText.getText().toString(),
+                addressText.getText().toString(),phoneNumberText.getText().toString(),image);
 
-        if(nama.isEmpty()){
-            nameText.setError("Please fill name correctly");
-        } else if( number.isEmpty() ){
-            phoneNumberText.setError("Please fill Number correctly");
-        } else if (address.isEmpty() ){
-            addressText.setError("Please fill address corectly");
-        }
-        else {
-            class AddUser extends AsyncTask<Void, Void, Void> {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    Preferensi user = new Preferensi();
-                    user.setNamePreferensi(nama);
-                    user.setPhoneNumber(number);
-                    user.setAddress(address);
-                    user.setEmailPreferensi(email);
-                    user.setPassword(pwd);
 
-                    DatabaseClientPreferensi.getInstance2(getApplicationContext()).getDatabasePreferensi()
-                            .PreferensiDao()
-                            .insert(user);
-
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-
-                }
+        add.enqueue(new retrofit2.Callback<PreferensiResponse>() {
+            @Override
+            public void onResponse(retrofit2.Call<PreferensiResponse> call, Response<PreferensiResponse> response) {
+                Toast.makeText(SignUp.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
-            AddUser add = new AddUser();
-            add.execute();
-        }
+
+            @Override
+            public void onFailure(retrofit2.Call<PreferensiResponse> call, Throwable t) {
+                Toast.makeText(SignUp.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

@@ -56,7 +56,7 @@ public class ShowListNewsActivity extends AppCompatActivity {
 
     public void loadUser(){
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<NewsResponse> call = apiService.getAllUser("data");
+        Call<NewsResponse> call = apiService.getAllNews("data");
 
         call.enqueue(new Callback<NewsResponse>() {
             @Override

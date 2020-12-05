@@ -110,7 +110,7 @@ public class EditNewsActivity  extends AppCompatActivity {
 
     private void loadUserById(String id){
         ApiInterface apiService =ApiClient.getClient().create(ApiInterface.class);
-        Call<NewsResponse> add = apiService.getUserById(id, "data");
+        Call<NewsResponse> add = apiService.getNewsById(id, "data");
 
         add.enqueue(new Callback<NewsResponse>() {
             @Override
@@ -146,7 +146,7 @@ public class EditNewsActivity  extends AppCompatActivity {
 
     private void UpdateUser(String sIdUser){
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<NewsResponse> add = apiService.updateUser(sIdUser,etBerita.getText().toString(),
+        Call<NewsResponse> add = apiService.updateNews(sIdUser,etBerita.getText().toString(),
                 etTanggal.getText().toString(), etIsi.getText().toString());
 
 

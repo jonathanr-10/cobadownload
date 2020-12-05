@@ -9,6 +9,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,6 +57,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
                 Bundle args = new Bundle();
                 args.putString("id",brg.getId());
                 dialog.setArguments(args);
+                Toast.makeText(context,"INI ID",Toast.LENGTH_LONG).show();
             }
         });
     }

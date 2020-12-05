@@ -117,7 +117,7 @@ public class DetailNewsFragment extends DialogFragment {
 
     private void loadUserById(String id){
         ApiInterface apiService =ApiClient.getClient().create(ApiInterface.class);
-        Call<NewsResponse> add = apiService.getUserById(id, "data");
+        Call<NewsResponse> add = apiService.getNewsById(id, "data");
 
         add.enqueue(new Callback<NewsResponse>() {
             @Override
@@ -150,7 +150,7 @@ public class DetailNewsFragment extends DialogFragment {
 
     private void deleteUser(String id){
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<NewsResponse> delete = apiService.deleteUser(id);
+        Call<NewsResponse> delete = apiService.deleteNews(id);
 
 
         delete.enqueue(new Callback<NewsResponse>() {

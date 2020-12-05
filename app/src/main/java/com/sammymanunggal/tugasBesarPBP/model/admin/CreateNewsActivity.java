@@ -87,7 +87,7 @@ public class CreateNewsActivity extends AppCompatActivity {
 
     private void saveUser(){
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<NewsResponse> add = apiService.createUser(etBerita.getText().toString(),
+        Call<NewsResponse> add = apiService.createNews(etBerita.getText().toString(),
                 etTanggal.getText().toString(),  etIsi.getText().toString());
 
 
@@ -101,7 +101,7 @@ public class CreateNewsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(retrofit2.Call<NewsResponse> call, Throwable t) {
-                Toast.makeText(CreateNewsActivity.this, "Kesalahan Jaringan ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateNewsActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });

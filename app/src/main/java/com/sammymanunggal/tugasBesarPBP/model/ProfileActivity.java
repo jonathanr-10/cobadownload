@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -30,13 +31,22 @@ import com.sammymanunggal.tugasBesarPBP.adapter.UserRecyclerViewAdapter;
 import com.sammymanunggal.tugasBesarPBP.database.DatabaseClient;
 import com.sammymanunggal.tugasBesarPBP.database.DatabaseClientPreferensi;
 import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.Preferensi;
+import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.PreferensiResponse;
 import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.SignIn;
 import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.SignUp;
+import com.sammymanunggal.tugasBesarPBP.model.admin.ApiClient;
+import com.sammymanunggal.tugasBesarPBP.model.admin.ApiInterface;
+import com.sammymanunggal.tugasBesarPBP.model.admin.EditNewsActivity;
+import com.sammymanunggal.tugasBesarPBP.model.admin.NewsResponse;
 import com.sammymanunggal.tugasBesarPBP.model.orderticket.TicketFragment;
 import com.sammymanunggal.tugasBesarPBP.model.orderticket.User;
 
 import java.net.URI;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -50,11 +60,15 @@ public class ProfileActivity extends AppCompatActivity {
     private Uri imageUri;
     private String email,password;
     private Preferensi preferensi;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        progressDialog = new ProgressDialog(getApplicationContext());
+        progressDialog.show();
 
         takePhoto = findViewById(R.id.takePhoto);
         signout = findViewById(R.id.btn_signout);
@@ -115,13 +129,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(),imageUri.toString(),Toast.LENGTH_SHORT).show();
-                if(imageUri.toString() != null){
-                    preferensi.setImgURI(imageUri.toString());
-                }
-                preferensi.setNamePreferensi(nama.getText().toString());
-                preferensi.setAddress(alamat.getText().toString());
-                preferensi.setPhoneNumber(nohp.getText().toString());
-                update(preferensi);
+//                if(imageUri.toString() == null){
+//                    preferensi.setImgURI(imageUri.toString());
+//                }
+//                preferensi.setNamePreferensi(nama.getText().toString());
+//                preferensi.setAddress(alamat.getText().toString());
+//                preferensi.setPhoneNumber(nohp.getText().toString());
+                UpdateUser(email,nama.getText().toString(),alamat.getText().toString(),nohp.getText().toString(),imageUri.toString());
 
 
             }
@@ -185,80 +199,56 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == RESULT_OK){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
             imageView.setImageURI(imageUri);
         }
     }
 
     private void GetPreferensi(String email){
-        class GetPreferensi extends AsyncTask<Void,Void, Preferensi> {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<PreferensiResponse> add = apiService.getUserById(email, "data");
 
+        add.enqueue(new Callback<PreferensiResponse>() {
             @Override
-            protected Preferensi doInBackground(Void... voids){
-                Preferensi user = DatabaseClientPreferensi
-                        .getInstance2(getApplicationContext())
-                        .getDatabasePreferensi()
-                        .PreferensiDao()
-                        .find(email);
-                return user;
+            public void onResponse(Call<PreferensiResponse> call, final Response<PreferensiResponse> response) {
+
+                nama.setText(response.body().getUsers().get(0).getNamePreferensi());
+                alamat.setText(response.body().getUsers().get(0).getAddress());
+                nohp.setText(response.body().getUsers().get(0).getPhoneNumber());
+                progressDialog.dismiss();
+
             }
 
             @Override
-            protected void onPostExecute(Preferensi users){
-                super.onPostExecute(users);
-                if(users == null){
-                    Toast.makeText(getApplicationContext(), "Empty", Toast.LENGTH_SHORT).show();
-                }else {
-                    preferensi = users;
-                    password = users.getPassword();
-                    header.setText(email);
-                    nama.setText(users.getNamePreferensi());
-                    alamat.setText(users.getAddress());
-                    nohp.setText(users.getPhoneNumber());
-                    String stringUri = users.getImgURI();
-                    if(stringUri == null){
-                        //Toast.makeText(getApplicationContext(), "Photo Empty", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Uri uri = Uri.parse(stringUri);
-                        imageView.setImageURI(uri);
-                    }
-
-
-                }
-
+            public void onFailure(Call<PreferensiResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
-        }
-        GetPreferensi get = new GetPreferensi();
-        get.execute();
+        });
     }
 
-    private void update(final Preferensi preferensi) {
+    private void UpdateUser(String email,String nama, String alamat, String nohp, String image){
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<PreferensiResponse> add = apiService.updateUser(email,nama,alamat,nohp,image);
 
-//        final String email = preferensi.getEmailPreferensi();
-//        final String password = preferensi.getPassword();
 
-        class UpdatePreferensi extends AsyncTask<Void, Void, Void> {
+        add.enqueue(new retrofit2.Callback<PreferensiResponse>() {
             @Override
-            protected Void doInBackground(Void... voids){
-                preferensi.setEmailPreferensi(email);
-                preferensi.setPassword(password);
-                DatabaseClientPreferensi
-                        .getInstance2(getApplicationContext())
-                        .getDatabasePreferensi()
-                        .PreferensiDao()
-                        .update(preferensi);
+            public void onResponse(retrofit2.Call<PreferensiResponse> call, Response<PreferensiResponse> response) {
+                Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
 
-                return null;
+                onBackPressed();
             }
 
-
             @Override
-            protected void onPostExecute (Void aVoid){
-                super.onPostExecute(aVoid);
-                Toast.makeText(getApplicationContext(),"UPDATED",Toast.LENGTH_SHORT).show();
+            public void onFailure(retrofit2.Call<PreferensiResponse> call, Throwable t) {
+                Toast.makeText(ProfileActivity.this, "Kesalahan Jaringan ", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
-        }
-        UpdatePreferensi update = new UpdatePreferensi();
-        update.execute();
+        });
     }
+
+
 }
