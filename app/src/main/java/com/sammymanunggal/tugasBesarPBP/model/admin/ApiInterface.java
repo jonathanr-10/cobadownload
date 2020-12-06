@@ -86,9 +86,7 @@ public interface ApiInterface {
                                         @Field("email") String email,
                                         @Field("password") String password,
                                         @Field("alamat")String alamat,
-                                        @Field("nohp") String nohp,
-                                        @Field("image") String image,
-                                        @Field("email_verified") String email_verified);
+                                        @Field("nohp") String nohp);
 
     @PUT("user/update/{email}")
     @FormUrlEncoded

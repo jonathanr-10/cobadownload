@@ -69,7 +69,7 @@ public class SignIn extends AppCompatActivity {
                 }
                 else {
                     if (email.isEmpty() && pwd.isEmpty()) {
-                        Toast.makeText(SignIn.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignIn.this, "Email and Password Empty", Toast.LENGTH_SHORT).show();
                     } else if (email.isEmpty()) {
                         Toast.makeText(SignIn.this, "Email Invalid", Toast.LENGTH_SHORT).show();
                     } else if (pwd.isEmpty()) {
@@ -83,7 +83,7 @@ public class SignIn extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
-                                    Toast.makeText(SignIn.this, "Email Invalid", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignIn.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                                 } else {
 
                                     SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);

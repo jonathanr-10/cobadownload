@@ -60,8 +60,8 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
 
                 //Add ke database client
-                addUser();
-                Toast.makeText(SignUp.this, "Register berhasil, Please Verify your email", Toast.LENGTH_SHORT).show();
+
+                //Toast.makeText(SignUp.this, "Register berhasil, Please Verify your email", Toast.LENGTH_SHORT).show();
                 //untuk login
                 final String email = emailText.getText().toString();
                 final String pwd = passwordText.getText().toString();
@@ -80,6 +80,8 @@ public class SignUp extends AppCompatActivity {
                             if(!task.isSuccessful()){
                                 Toast.makeText(SignUp.this, "Failed to register", Toast.LENGTH_SHORT).show();
                             }else{
+
+                                addUser();
                                 mFirebaseAuth.getCurrentUser().sendEmailVerification()
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -110,18 +112,18 @@ public class SignUp extends AppCompatActivity {
 
     private void addUser(){
         String image="";
-        String email_verfied=null;
+        String email_verfied="";
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<PreferensiResponse> add = apiService.createUser(nameText.getText().toString(),
                 emailText.getText().toString(),passwordText.getText().toString(),
-                addressText.getText().toString(),phoneNumberText.getText().toString(),image,email_verfied);
+                addressText.getText().toString(),phoneNumberText.getText().toString());
 
 
         add.enqueue(new retrofit2.Callback<PreferensiResponse>() {
             @Override
             public void onResponse(retrofit2.Call<PreferensiResponse> call, Response<PreferensiResponse> response) {
-                Toast.makeText(SignUp.this, "User berhasil dibuat", Toast.LENGTH_SHORT).show();
-                onBackPressed();
+                Toast.makeText(SignUp.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//                onBackPressed();
             }
 
             @Override

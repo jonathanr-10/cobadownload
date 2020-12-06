@@ -12,7 +12,7 @@ public class Preferensi implements Serializable {
     @SerializedName("id")
     public int id;
 
-    @SerializedName("nama")
+    @SerializedName("name")
     public String nama;
 
     @SerializedName("alamat")
@@ -29,6 +29,17 @@ public class Preferensi implements Serializable {
 
     @SerializedName("image")
     public String imgURI;
+
+    public String getEmail_verified() {
+        return email_verified;
+    }
+
+    public void setEmail_verified(String email_verified) {
+        this.email_verified = email_verified;
+    }
+
+    @SerializedName("email_verified")
+    public String email_verified;
 
     public String getImgURI() { return imgURI; }
 

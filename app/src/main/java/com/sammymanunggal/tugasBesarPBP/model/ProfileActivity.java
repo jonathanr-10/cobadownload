@@ -115,14 +115,17 @@ public class ProfileActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),imageUri.toString(),Toast.LENGTH_SHORT).show();
-//                if(imageUri.toString() == null){
-//                    preferensi.setImgURI(imageUri.toString());
-//                }
+                if(imageUri == null){
+                    UpdateUser(email,nama.getText().toString(),alamat.getText().toString(),nohp.getText().toString(),"");
+
+                }else{
+                    UpdateUser(email,nama.getText().toString(),alamat.getText().toString(),nohp.getText().toString(),imageUri.toString());
+                    Toast.makeText(getApplicationContext(),imageUri.toString(),Toast.LENGTH_SHORT).show();
+
+                }
 //                preferensi.setNamePreferensi(nama.getText().toString());
 //                preferensi.setAddress(alamat.getText().toString());
 //                preferensi.setPhoneNumber(nohp.getText().toString());
-                UpdateUser(email,nama.getText().toString(),alamat.getText().toString(),nohp.getText().toString(),imageUri.toString());
 
 
             }
