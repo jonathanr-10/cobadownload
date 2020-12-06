@@ -76,8 +76,8 @@ public interface ApiInterface {
     @GET("user")
     Call<PreferensiResponse> getAllUser(@Query("data") String data);
 
-    @GET("user/{id}")
-    Call<PreferensiResponse> getUserById(@Path("id") String id,
+    @GET("user/{email}")
+    Call<PreferensiResponse> getUserById(@Path("email") String email,
                                          @Query("data") String data);
 
     @POST("user")

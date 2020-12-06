@@ -55,8 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        progressDialog = new ProgressDialog(getApplicationContext());
-        progressDialog.show();
+
 
         takePhoto = findViewById(R.id.takePhoto);
         signout = findViewById(R.id.btn_signout);
@@ -204,14 +203,13 @@ public class ProfileActivity extends AppCompatActivity {
                 nama.setText(response.body().getUsers().get(0).getNamePreferensi());
                 alamat.setText(response.body().getUsers().get(0).getAddress());
                 nohp.setText(response.body().getUsers().get(0).getPhoneNumber());
-                progressDialog.dismiss();
+
 
             }
 
             @Override
             public void onFailure(Call<PreferensiResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
             }
         });
     }
@@ -225,7 +223,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(retrofit2.Call<PreferensiResponse> call, Response<PreferensiResponse> response) {
                 Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
 
                 onBackPressed();
             }
@@ -233,7 +230,6 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(retrofit2.Call<PreferensiResponse> call, Throwable t) {
                 Toast.makeText(ProfileActivity.this, "Kesalahan Jaringan ", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
             }
         });
     }

@@ -93,6 +93,8 @@ public class SignIn extends AppCompatActivity {
                                     editor.apply();
 
                                     Toast.makeText(SignIn.this, "Login Successfull", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignIn.this, mSettings.getString("email","missing"), Toast.LENGTH_SHORT).show();
+
                                     Intent intToHome = new Intent(SignIn.this, MainActivity.class);
                                     startActivity(intToHome);
                                     SignIn.this.finish();
