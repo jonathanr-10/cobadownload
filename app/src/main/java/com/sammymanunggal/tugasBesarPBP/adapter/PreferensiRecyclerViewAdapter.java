@@ -1,7 +1,6 @@
 package com.sammymanunggal.tugasBesarPBP.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sammymanunggal.tugasBesarPBP.R;
 import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.Preferensi;
-import com.sammymanunggal.tugasBesarPBP.model.orderticket.UpdateFragment;
-import com.sammymanunggal.tugasBesarPBP.model.orderticket.User;
 
 import java.util.List;
 

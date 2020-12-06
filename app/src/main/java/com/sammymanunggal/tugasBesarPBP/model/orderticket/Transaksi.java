@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class User implements Serializable {
+public class Transaksi implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 

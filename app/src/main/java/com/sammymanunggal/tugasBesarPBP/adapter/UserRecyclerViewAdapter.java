@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sammymanunggal.tugasBesarPBP.R;
-import com.sammymanunggal.tugasBesarPBP.model.orderticket.User;
+import com.sammymanunggal.tugasBesarPBP.model.orderticket.Transaksi;
 import com.sammymanunggal.tugasBesarPBP.model.orderticket.UpdateFragment;
 
 import java.util.ArrayList;
@@ -22,14 +22,14 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
 
 
     private Context context;
-    private List<User> userList;
-    private List<User> userListFull;
+    private List<Transaksi> transaksiList;
+    private List<Transaksi> transaksiListFull;
 
 
-    public UserRecyclerViewAdapter(Context context, List<User> userList){
+    public UserRecyclerViewAdapter(Context context, List<Transaksi> transaksiList){
         this.context = context;
-        this.userList = userList;
-        userListFull = new ArrayList<>(userList);
+        this.transaksiList = transaksiList;
+        transaksiListFull = new ArrayList<>(transaksiList);
         notifyDataSetChanged();
     }
 
@@ -46,17 +46,19 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
     }
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position){
-        User user = userList.get(position);
-        holder.textView.setText(user.getFullName());
-        holder.textMuseum.setText(user.getMuseumName());
-        holder.textTotal.setText(String.valueOf(user.getTotal()));
-        holder.textHarga.setText(String.valueOf(user.getHarga()));
+        Transaksi transaksi = transaksiList.get(position);
+        holder.textView.setText(transaksi.getFullName());
+        holder.textMuseum.setText(transaksi.getMuseumName());
+        holder.textTotal.setText(String.valueOf(transaksi.getTotal()));
+        holder.textHarga.setText(String.valueOf(transaksi.getHarga()));
+
+        ;
 
     }
 
     @Override
     public int getItemCount(){
-        return userList.size();
+        return transaksiList.size();
     }
 
 
@@ -74,13 +76,12 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             itemView.setOnClickListener(this);
         }
 
-
         @Override
-        public void onClick(View v) {
-            AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            User user = userList.get(getAdapterPosition());
+        public void onClick(View view) {
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
             Bundle data = new Bundle();
-            data.putSerializable("user", user);
+            Transaksi transaksi = transaksiList.get(getAdapterPosition());
+            data.putSerializable("user", transaksi);
             UpdateFragment updateFragment = new UpdateFragment();
             updateFragment.setArguments(data);
             activity.getSupportFragmentManager()
@@ -88,6 +89,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
                     .replace(R.id.frame_layout_ticket, updateFragment)
                     .commit();
         }
+
     }
 
 

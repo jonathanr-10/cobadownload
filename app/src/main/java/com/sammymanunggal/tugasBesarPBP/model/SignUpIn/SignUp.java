@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.sammymanunggal.tugasBesarPBP.R;
-import com.sammymanunggal.tugasBesarPBP.database.DatabaseClientPreferensi;
+//import com.sammymanunggal.tugasBesarPBP.database.DatabaseClientPreferensi;
 import com.sammymanunggal.tugasBesarPBP.model.MainActivity;
 import com.sammymanunggal.tugasBesarPBP.model.admin.ApiClient;
 import com.sammymanunggal.tugasBesarPBP.model.admin.ApiInterface;
@@ -110,16 +110,17 @@ public class SignUp extends AppCompatActivity {
 
     private void addUser(){
         String image="";
+        String email_verfied=null;
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<PreferensiResponse> add = apiService.createUser(nameText.getText().toString(),
                 emailText.getText().toString(),passwordText.getText().toString(),
-                addressText.getText().toString(),phoneNumberText.getText().toString(),image);
+                addressText.getText().toString(),phoneNumberText.getText().toString(),image,email_verfied);
 
 
         add.enqueue(new retrofit2.Callback<PreferensiResponse>() {
             @Override
             public void onResponse(retrofit2.Call<PreferensiResponse> call, Response<PreferensiResponse> response) {
-                Toast.makeText(SignUp.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUp.this, "User berhasil dibuat", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
 

@@ -1,5 +1,7 @@
 package com.sammymanunggal.tugasBesarPBP.model.orderticket;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -20,9 +22,18 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.sammymanunggal.tugasBesarPBP.R;
-import com.sammymanunggal.tugasBesarPBP.database.DatabaseClient;
+import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.PreferensiResponse;
+import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.SignUp;
+import com.sammymanunggal.tugasBesarPBP.model.admin.ApiClient;
+import com.sammymanunggal.tugasBesarPBP.model.admin.ApiInterface;
+//import com.sammymanunggal.tugasBesarPBP.database.DatabaseClient;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
+
+import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 
 
 public class AddFragment extends Fragment {
@@ -30,103 +41,55 @@ public class AddFragment extends Fragment {
     TextInputEditText editText, editTotal;
     AutoCompleteTextView editMuseum;
     Button AddBtn, cancelBtn;
-    User user;
+    Transaksi transaksi;
     private RecyclerView recyclerView;
     private AutoCompleteTextView dropDownText;
+    private String email;
+    private double harga;
     public AddFragment() {
 
     }
 
-    private void addUser() {
+    private void addTransaksi() {
+
         final String name = editText.getText().toString();
         final String museum =editMuseum.getText().toString();
-        final String totalText = editTotal.getText().toString();
-        int harga = 0;
+        final String totaltext = editTotal.getText().toString();
+        final int total= Integer.parseInt(editTotal.getText().toString());
 
-        if(name.isEmpty() || museum.isEmpty() || totalText.isEmpty()){
-            editTotal.setError("Please fill Total correctly");
-            editText.setError("Please fill Name correctly");
-            editMuseum.setError("Please fill Museum correctly");
+        if(museum.equals("Museum Affandi")){
+            harga = 3000*total;
+        } else if( museum.equals("Museum Merapi") ){
+            harga = 10000*total;
+        }else  if( museum.equals("Museum Vredeburg") ){
+            harga = 2000*total;
+        }else  if( museum.equals("Museum Kraton") ){
+            harga = 15000*total;
+        }else  if( museum.equals("Museum Sandi") ){
+            harga = 3000*total;
+        }else  if( museum.equals("Museum Jogja Kembali") ){
+            harga = 1000 * total;
         }
-        else {
-            final int total= Integer.parseInt(editTotal.getText().toString());
-
-            if( museum.equals("Museum Affandi") ){
-                harga = 3000*total;
-            } else  if( museum.equals("Museum Merapi") ){
-                harga = 10000*total;
-            } else  if( museum.equals("Museum Vredeburg") ){
-                harga = 2000*total;
-            }else  if( museum.equals("Museum Kraton") ){
-                harga = 15000*total;
-            }else  if( museum.equals("Museum Sandi") ){
-                harga = 3000*total;
-            }else  if( museum.equals("Museum Jogja Kembali") ){
-                harga = 1000*total;
-            }
 
 
-            final int finalHarga = harga;
-            class AddUser extends AsyncTask<Void, Void, Void> {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    User user = new User();
-                    user.setFullName(name);
-                    user.setMuseumName(museum);
-                    user.setTotal(total);
-                    user.setHarga(finalHarga);
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<TransaksiResponse> add = apiService.createTransaksi(name,email,museum,totaltext,Double.toString(harga));
 
-                    DatabaseClient.getInstance(getActivity().getApplicationContext()).getDatabase()
-                            .userDao()
-                            .insert(user);
 
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-                    Toast.makeText(getActivity().getApplicationContext(), "Order Is Success", Toast.LENGTH_SHORT).show();
-                    editText.setText("");
-                    editTotal.setText("");
-                    editMuseum.setText("");
-                    getUsers();
-                }
-            }
-
-            AddUser add = new AddUser();
-            add.execute();
-        }
-    }
-
-    private void getUsers() {
-        class GetUsers extends AsyncTask<Void, Void, List<User>> {
-
+        add.enqueue(new retrofit2.Callback<TransaksiResponse>() {
             @Override
-            protected List<User> doInBackground(Void... voids) {
-                List<User> userList = DatabaseClient
-                        .getInstance(getActivity().getApplicationContext())
-                        .getDatabase()
-                        .userDao()
-                        .getAll();
-                return userList;
+            public void onResponse(retrofit2.Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
+                Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            protected void onPostExecute(List<User> users) {
-                super.onPostExecute(users);
-
-                if (users.isEmpty()) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Empty List", Toast.LENGTH_SHORT).show();
-
-                }
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.hide(AddFragment.this).commit();
+            public void onFailure(retrofit2.Call<TransaksiResponse> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }
-        GetUsers get = new GetUsers();
-        get.execute();
+        });
     }
+
+
 
 
     @Override
@@ -139,6 +102,10 @@ public class AddFragment extends Fragment {
         AddBtn = view.findViewById(R.id.btn_add1);
         cancelBtn = view.findViewById(R.id.btn_cancel1);
 
+        SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        email = mSettings.getString("email", "missing");
+
+
         return view;
 
     }
@@ -147,6 +114,9 @@ public class AddFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
         dropDownText = view.findViewById(R.id.dropdown2_layout);
         String[] Item = new String[]{
                 "Museum Affandi",
@@ -176,7 +146,7 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                addUser();
+                addTransaksi();
 
             }
 

@@ -1,5 +1,7 @@
 package com.sammymanunggal.tugasBesarPBP.model.orderticket;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -19,9 +21,16 @@ import android.widget.Toast;
 
 import com.sammymanunggal.tugasBesarPBP.R;
 import com.sammymanunggal.tugasBesarPBP.adapter.UserRecyclerViewAdapter;
-import com.sammymanunggal.tugasBesarPBP.database.DatabaseClient;
+import com.sammymanunggal.tugasBesarPBP.model.admin.ApiClient;
+import com.sammymanunggal.tugasBesarPBP.model.admin.ApiInterface;
+//import com.sammymanunggal.tugasBesarPBP.database.DatabaseClient;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
+
+import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 
 
 public class TicketFragment extends Fragment {
@@ -29,6 +38,7 @@ public class TicketFragment extends Fragment {
 
     SwipeRefreshLayout refreshLayout;
     Button sendButton, historyButton;
+    private String email;
 
     public TicketFragment() {
 
@@ -44,6 +54,8 @@ public class TicketFragment extends Fragment {
 
         sendButton = view.findViewById(R.id.addTiket);
 
+        SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        email = mSettings.getString("email", "missing");
 
         return view;
     }
@@ -85,34 +97,25 @@ public class TicketFragment extends Fragment {
 
     }
 
+    private void getUsers() {
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<TransaksiResponse> add = apiService.getTransaksiById(email,"data");
 
-    private void getUsers(){
-        class GetUsers extends AsyncTask<Void,Void, List<User>> {
 
+        add.enqueue(new retrofit2.Callback<TransaksiResponse>() {
             @Override
-            protected List<User> doInBackground(Void... voids){
-                List<User> userList = DatabaseClient
-                        .getInstance(getActivity().getApplicationContext())
-                        .getDatabase()
-                        .userDao()
-                        .getAll();
-                return userList;
-            }
-
-            @Override
-            protected void onPostExecute(List<User> users){
-                super.onPostExecute(users);
-                final UserRecyclerViewAdapter adapter = new UserRecyclerViewAdapter(TicketFragment.this.getContext(),users);
+            public void onResponse(retrofit2.Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
+                Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                final UserRecyclerViewAdapter adapter = new UserRecyclerViewAdapter(TicketFragment.this.getContext(),response.body().getUsers());
                 recyclerView.setAdapter(adapter);
 
-                if(users.isEmpty()){
-                    Toast.makeText(getActivity().getApplicationContext(), "Empty List", Toast.LENGTH_SHORT).show();
-
-                }
             }
-        }
-        GetUsers get = new GetUsers();
-        get.execute();
+
+            @Override
+            public void onFailure(retrofit2.Call<TransaksiResponse> call, Throwable t) {
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

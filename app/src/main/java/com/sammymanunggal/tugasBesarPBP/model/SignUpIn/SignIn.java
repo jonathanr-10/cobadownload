@@ -20,9 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.sammymanunggal.tugasBesarPBP.R;
 import com.sammymanunggal.tugasBesarPBP.model.MainActivity;
-import com.sammymanunggal.tugasBesarPBP.model.ProfileActivity;
 import com.sammymanunggal.tugasBesarPBP.model.admin.NewsMainActivity;
-import com.sammymanunggal.tugasBesarPBP.model.orderticket.User;
 
 public class SignIn extends AppCompatActivity {
     TextInputEditText emailInputan, passwordInputan;
