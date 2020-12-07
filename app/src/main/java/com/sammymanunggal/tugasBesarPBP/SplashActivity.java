@@ -21,21 +21,19 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-//                SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-//                int isLogin = mSettings.getInt("isLogin",-1);
-//                if(isLogin == 1){
-//                    Intent intent= new Intent(SplashActivity.this, MainActivity.class); //SignIn Class
-//                    SplashActivity.this.startActivity(intent);
-//                    SplashActivity.this.finish();
-//                }else{
-//                    Intent intent= new Intent(SplashActivity.this, SignIn.class); //SignIn Class
-//                    SplashActivity.this.startActivity(intent);
-//                    SplashActivity.this.finish();
-//                }
-
-                Intent intent= new Intent(SplashActivity.this, SignIn.class); //SignIn Class
+                SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref2", Context.MODE_PRIVATE);
+                int isLogin = mSettings.getInt("isLogin",-1);
+                if(isLogin == 1){
+                    Intent intent= new Intent(SplashActivity.this, MainActivity.class); //SignIn Class
                     SplashActivity.this.startActivity(intent);
                     SplashActivity.this.finish();
+                }else{
+                    Intent intent= new Intent(SplashActivity.this, SignIn.class); //SignIn Class
+                    SplashActivity.this.startActivity(intent);
+                    SplashActivity.this.finish();
+                }
+
+
             }
         }, SPLASH_TIME);
     }

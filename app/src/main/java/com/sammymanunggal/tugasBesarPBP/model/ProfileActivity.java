@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Uri imageUri = null;
     private String email,password;
     private Preferensi preferensi;
-    private ProgressDialog progressDialog;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +70,14 @@ public class ProfileActivity extends AppCompatActivity {
         nohp = findViewById(R.id.profile_nohp);
         imageView = findViewById(R.id.imgProfile);
 
-        SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref2", Context.MODE_PRIVATE);
         email = mSettings.getString("email", "missing");
         String email2 = email;
         Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
+
+        dialog = new ProgressDialog(ProfileActivity.this);
+        dialog.setMessage("Tunggu Sebentar");
+        dialog.show();
 
 
 
@@ -206,13 +210,15 @@ public class ProfileActivity extends AppCompatActivity {
                 nama.setText(response.body().getUsers().get(0).getNamePreferensi());
                 alamat.setText(response.body().getUsers().get(0).getAddress());
                 nohp.setText(response.body().getUsers().get(0).getPhoneNumber());
-
+                dialog.dismiss();
 
             }
 
             @Override
             public void onFailure(Call<PreferensiResponse> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+
             }
         });
     }
@@ -225,8 +231,9 @@ public class ProfileActivity extends AppCompatActivity {
         add.enqueue(new retrofit2.Callback<PreferensiResponse>() {
             @Override
             public void onResponse(retrofit2.Call<PreferensiResponse> call, Response<PreferensiResponse> response) {
-                Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
+//                Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                // Sementara Response selalu return null jadi tak buat gini sek
+                Toast.makeText(ProfileActivity.this, "Berhasil Update", Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
 

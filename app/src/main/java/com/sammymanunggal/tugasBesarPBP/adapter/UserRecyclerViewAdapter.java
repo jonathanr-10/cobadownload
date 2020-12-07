@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,7 +81,8 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
         public void onClick(View view) {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
             Bundle data = new Bundle();
-            Transaksi transaksi = transaksiList.get(getAdapterPosition());
+            Transaksi transaksi = transaksiList.get(0);
+            Toast.makeText(context,transaksi.fullName,Toast.LENGTH_LONG).show();
             data.putSerializable("user", transaksi);
             UpdateFragment updateFragment = new UpdateFragment();
             updateFragment.setArguments(data);

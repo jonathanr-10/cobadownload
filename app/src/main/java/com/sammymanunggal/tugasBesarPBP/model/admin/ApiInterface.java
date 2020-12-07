@@ -54,7 +54,7 @@ public interface ApiInterface {
     @POST("transaksi")
     @FormUrlEncoded
     Call<TransaksiResponse> createTransaksi(@Field("nama")String name,
-                                  @Field("email") String email,
+                                  @Field("emailUser") String email,
                                   @Field("museum") String museum,
                                   @Field("jumlah")String jumlah,
                                   @Field("harga") String harga);
@@ -69,7 +69,7 @@ public interface ApiInterface {
                                       @Field("harga") String harga);
 
     @DELETE("transaksi/delete/{id}")
-    Call<TransaksiResponse> deleteTransaksi(@Path("id") String id);
+    Call<TransaksiResponse> deleteTransaksi(@Path("id") int id);
 
     // ======================= USER ===========================
 

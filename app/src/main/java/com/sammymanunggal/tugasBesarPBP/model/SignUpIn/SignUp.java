@@ -113,6 +113,7 @@ public class SignUp extends AppCompatActivity {
     private void addUser(){
         String image="";
         String email_verfied="";
+
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<PreferensiResponse> add = apiService.createUser(nameText.getText().toString(),
                 emailText.getText().toString(),passwordText.getText().toString(),

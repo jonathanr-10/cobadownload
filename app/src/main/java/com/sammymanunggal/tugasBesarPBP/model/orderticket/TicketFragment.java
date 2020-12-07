@@ -1,5 +1,6 @@
 package com.sammymanunggal.tugasBesarPBP.model.orderticket;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -39,6 +40,7 @@ public class TicketFragment extends Fragment {
     SwipeRefreshLayout refreshLayout;
     Button sendButton, historyButton;
     private String email;
+    ProgressDialog dialog;
 
     public TicketFragment() {
 
@@ -52,9 +54,13 @@ public class TicketFragment extends Fragment {
         recyclerView= view.findViewById(R.id.user_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
+        dialog = new ProgressDialog(getContext());
+        dialog.setMessage("Tunggu Sebentar");
+        dialog.show();
+
         sendButton = view.findViewById(R.id.addTiket);
 
-        SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        SharedPreferences mSettings = getContext().getSharedPreferences("MyPref2", Context.MODE_PRIVATE);
         email = mSettings.getString("email", "missing");
 
         return view;
@@ -87,7 +93,7 @@ public class TicketFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(getActivity().getApplicationContext(), "Terefresh", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Terefresh", Toast.LENGTH_SHORT).show();
                 getUsers();
                 refreshLayout.setRefreshing(false);
 
@@ -105,15 +111,17 @@ public class TicketFragment extends Fragment {
         add.enqueue(new retrofit2.Callback<TransaksiResponse>() {
             @Override
             public void onResponse(retrofit2.Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
-                Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 final UserRecyclerViewAdapter adapter = new UserRecyclerViewAdapter(TicketFragment.this.getContext(),response.body().getUsers());
                 recyclerView.setAdapter(adapter);
+                dialog.dismiss();
 
             }
 
             @Override
             public void onFailure(retrofit2.Call<TransaksiResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.sammymanunggal.tugasBesarPBP.model.orderticket;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -33,6 +34,7 @@ public class UpdateFragment extends Fragment {
     private Button saveBtn, payBtn, cancelBtn;
     private Transaksi transaksi;
     private String email;
+    private ProgressDialog dialog;
 
     public  UpdateFragment(){
 
@@ -68,11 +70,14 @@ public class UpdateFragment extends Fragment {
             @Override
             public void onResponse(retrofit2.Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
                 Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(retrofit2.Call<TransaksiResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+
             }
         });
     }
@@ -80,18 +85,21 @@ public class UpdateFragment extends Fragment {
 
     private void delete(final Transaksi transaksi){
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<TransaksiResponse> add = apiService.deleteTransaksi(Integer.toString(transaksi.getId()));
+        Call<TransaksiResponse> add = apiService.deleteTransaksi(transaksi.getId());
 
 
         add.enqueue(new retrofit2.Callback<TransaksiResponse>() {
             @Override
             public void onResponse(retrofit2.Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
                 Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(retrofit2.Call<TransaksiResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+
             }
         });
     }
@@ -107,8 +115,10 @@ public class UpdateFragment extends Fragment {
         payBtn = view.findViewById(R.id.btn_delete2);
         cancelBtn = view.findViewById(R.id.btn_cancel2);
 
-        SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        SharedPreferences mSettings = getContext().getSharedPreferences("MyPref2", Context.MODE_PRIVATE);
         email = mSettings.getString("email", "missing");
+
+
 
 
 
@@ -141,7 +151,9 @@ public class UpdateFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-
+                dialog = new ProgressDialog(getContext());
+                dialog.setMessage("Tunggu Sebentar");
+                dialog.show();
 
                 transaksi.setFullName(editText.getText().toString());
                 transaksi.setTotal(Integer.parseInt(editTotal.getText().toString()));;
@@ -153,7 +165,9 @@ public class UpdateFragment extends Fragment {
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                dialog = new ProgressDialog(getContext());
+                dialog.setMessage("Tunggu Sebentar");
+                dialog.show();
                 delete(transaksi);
             }
         });

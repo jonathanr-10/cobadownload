@@ -30,6 +30,7 @@ public class SignIn extends AppCompatActivity {
 
     FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    FirebaseUser mFirebaseUser;
     TextView tvSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class SignIn extends AppCompatActivity {
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+                mFirebaseUser = mFirebaseAuth.getCurrentUser();
                 if( mFirebaseUser != null ){
 
                 }
@@ -85,19 +86,24 @@ public class SignIn extends AppCompatActivity {
                                 if (!task.isSuccessful()) {
                                     Toast.makeText(SignIn.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                                 } else {
+                                        if(!mFirebaseUser.isEmailVerified()){
+                                            Toast.makeText(SignIn.this,"Please Verify Email",Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref2", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = mSettings.edit();
+                                            editor.putInt("isLogin", 1);
+                                            editor.putString("email", emailInputan.getText().toString());
+                                            editor.apply();
 
-                                    SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = mSettings.edit();
-                                    editor.putInt("isLogin", 1);
-                                    editor.putString("email", emailInputan.getText().toString());
-                                    editor.apply();
+                                            Toast.makeText(SignIn.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(SignIn.this, mSettings.getString("email","missing"), Toast.LENGTH_SHORT).show();
+                                            Intent intToHome = new Intent(SignIn.this, MainActivity.class);
+                                            startActivity(intToHome);
+                                            SignIn.this.finish();
+                                    }
 
-                                    Toast.makeText(SignIn.this, "Login Successfull", Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(SignIn.this, mSettings.getString("email","missing"), Toast.LENGTH_SHORT).show();
 
-                                    Intent intToHome = new Intent(SignIn.this, MainActivity.class);
-                                    startActivity(intToHome);
-                                    SignIn.this.finish();
+
                                 }
                             }
 

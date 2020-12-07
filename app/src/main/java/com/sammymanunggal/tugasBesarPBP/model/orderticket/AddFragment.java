@@ -80,6 +80,7 @@ public class AddFragment extends Fragment {
             @Override
             public void onResponse(retrofit2.Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
                 Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                getFragmentManager().popBackStackImmediate();
             }
 
             @Override
@@ -102,7 +103,7 @@ public class AddFragment extends Fragment {
         AddBtn = view.findViewById(R.id.btn_add1);
         cancelBtn = view.findViewById(R.id.btn_cancel1);
 
-        SharedPreferences mSettings = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        SharedPreferences mSettings = getContext().getSharedPreferences("MyPref2", Context.MODE_PRIVATE);
         email = mSettings.getString("email", "missing");
 
 
