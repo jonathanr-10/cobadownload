@@ -10,6 +10,8 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.SignIn;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -35,7 +37,7 @@ import static org.hamcrest.Matchers.is;
 public class SignInActivityTest_PBP_F_KelG {
 
     @Rule
-    public ActivityTestRule<SplashActivity> mActivityTestRule = new ActivityTestRule<>(SplashActivity.class);
+    public ActivityTestRule<SignIn> mActivityTestRule = new ActivityTestRule<>(SignIn.class);
 
     @Test
     public void signInActivityTest_PBP_F_KelG() {
@@ -78,7 +80,6 @@ public class SignInActivityTest_PBP_F_KelG {
                         isDisplayed()));
         textInputEditText2.perform(replaceText("jonathanrocksea@gmail.com"), closeSoftKeyboard());
 
-        pressBack();
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.buttonSignIn), withText("Sign In"),
@@ -96,7 +97,7 @@ public class SignInActivityTest_PBP_F_KelG {
                                 childAtPosition(
                                         withId(R.id.editTextPassword_layout),
                                         0),
-                                0),
+                                1),
                         isDisplayed()));
         textInputEditText3.perform(replaceText("123456"), closeSoftKeyboard());
 
@@ -119,8 +120,6 @@ public class SignInActivityTest_PBP_F_KelG {
                                 0),
                         isDisplayed()));
         textInputEditText5.perform(closeSoftKeyboard());
-
-        pressBack();
 
         ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.buttonSignIn), withText("Sign In"),
@@ -168,7 +167,7 @@ public class SignInActivityTest_PBP_F_KelG {
                                 childAtPosition(
                                         withId(R.id.editTextPassword_layout),
                                         0),
-                                0),
+                                1),
                         isDisplayed()));
         textInputEditText9.perform(replaceText("12345"));
 
@@ -178,11 +177,10 @@ public class SignInActivityTest_PBP_F_KelG {
                                 childAtPosition(
                                         withId(R.id.editTextPassword_layout),
                                         0),
-                                0),
+                                1),
                         isDisplayed()));
         textInputEditText10.perform(closeSoftKeyboard());
 
-        pressBack();
 
         ViewInteraction materialButton4 = onView(
                 allOf(withId(R.id.buttonSignIn), withText("Sign In"),
@@ -200,7 +198,7 @@ public class SignInActivityTest_PBP_F_KelG {
                                 childAtPosition(
                                         withId(R.id.editTextPassword_layout),
                                         0),
-                                0),
+                                1),
                         isDisplayed()));
         textInputEditText11.perform(click());
 
@@ -210,7 +208,7 @@ public class SignInActivityTest_PBP_F_KelG {
                                 childAtPosition(
                                         withId(R.id.editTextPassword_layout),
                                         0),
-                                0),
+                                1),
                         isDisplayed()));
         textInputEditText12.perform(replaceText("123456"));
 
@@ -220,7 +218,7 @@ public class SignInActivityTest_PBP_F_KelG {
                                 childAtPosition(
                                         withId(R.id.editTextPassword_layout),
                                         0),
-                                0),
+                                1),
                         isDisplayed()));
         textInputEditText13.perform(closeSoftKeyboard());
 
@@ -244,7 +242,6 @@ public class SignInActivityTest_PBP_F_KelG {
                         isDisplayed()));
         textInputEditText15.perform(closeSoftKeyboard());
 
-        pressBack();
 
         ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.buttonSignIn), withText("Sign In"),
@@ -286,7 +283,6 @@ public class SignInActivityTest_PBP_F_KelG {
                         isDisplayed()));
         textInputEditText18.perform(closeSoftKeyboard());
 
-        pressBack();
 
         ViewInteraction materialButton6 = onView(
                 allOf(withId(R.id.buttonSignIn), withText("Sign In"),
