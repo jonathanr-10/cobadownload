@@ -15,13 +15,11 @@ public class NewsDAO {
     @SerializedName("isi")
     private String isi;
 
-
     public NewsDAO(String id, String berita, String tanggal, String isi){
         this.id = id;
         this.berita = berita;
         this.tanggal= tanggal;
         this.isi = isi;
-
     }
 
     public String getId(){return id;}
@@ -32,8 +30,6 @@ public class NewsDAO {
 
     public String getIsi(){return isi;}
 
-
-
     public void setId(String id){this.id=id;}
 
     public void setBerita(String berita){this.berita=berita;}
@@ -41,8 +37,4 @@ public class NewsDAO {
     public void setIsi(String isi){this.isi=isi;}
 
     public void setTanggal(String tanggal){this.tanggal=tanggal;}
-
-
-
-
 }

@@ -65,14 +65,24 @@ public class SignUp extends AppCompatActivity {
                 //untuk login
                 final String email = emailText.getText().toString();
                 final String pwd = passwordText.getText().toString();
+                final String name = nameText.getText().toString();
+                final String address =addressText.getText().toString();
+                final String phone= phoneNumberText.getText().toString();
 
                 if(email.isEmpty()){
                     emailText.setError("Please fill Email correctly");
-                }
-                else if (pwd.isEmpty()){
+                } else if (pwd.isEmpty()){
                     passwordText.setError("Please fill Password correctly");
                 } else if (pwd.length()<6){
                     Toast.makeText(SignUp.this, "Password too short, minimum 6 ", Toast.LENGTH_SHORT).show();
+                }else if(name.isEmpty()){
+                    nameText.setError("Please fill Name correctly");
+                }else if (address.isEmpty()){
+                    addressText.setError("Please fill address correctly");
+                } else if(phone.isEmpty()){
+                    phoneNumberText.setError("Please fill Phone correctly");
+                }else if(phone.length() <11){
+                    Toast.makeText(SignUp.this, "Phone Number too short, minimum 11 ", Toast.LENGTH_SHORT).show();
                 }else if (!(email.isEmpty() && pwd.isEmpty())){
                     mFirebaseAuth.createUserWithEmailAndPassword(email,pwd).addOnCompleteListener(SignUp.this, new OnCompleteListener<AuthResult>() {
                         @Override

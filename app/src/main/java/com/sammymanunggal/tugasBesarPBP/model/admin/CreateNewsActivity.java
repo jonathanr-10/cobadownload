@@ -48,16 +48,12 @@ public class CreateNewsActivity extends AppCompatActivity {
         btnCreate= findViewById(R.id.btnCreate);
 
 
-
-
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
-
-
 
         btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override

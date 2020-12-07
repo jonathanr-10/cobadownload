@@ -24,9 +24,6 @@ public interface ApiInterface {
     Call<NewsResponse> getNewsById(@Path("id") String id,
                                    @Query("data") String data);
 
-
-
-
     @POST("news")
     @FormUrlEncoded
     Call<NewsResponse> createNews(@Field("berita")String judul,
