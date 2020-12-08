@@ -12,9 +12,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,6 +34,8 @@ import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.SignIn;
 import com.sammymanunggal.tugasBesarPBP.model.admin.ApiClient;
 import com.sammymanunggal.tugasBesarPBP.model.admin.ApiInterface;
 
+import java.io.ByteArrayOutputStream;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int PERMISSION_CODE = 100;
     private static final int IMAGE_CAPTURE_CODE = 101;
     private Uri imageUri = null;
+    private Bitmap bitmap;
     private String email,password;
     private Preferensi preferensi;
     private ProgressDialog dialog;
@@ -78,8 +83,6 @@ public class ProfileActivity extends AppCompatActivity {
         dialog = new ProgressDialog(ProfileActivity.this);
         dialog.setMessage("Tunggu Sebentar");
         dialog.show();
-
-
 
         GetPreferensi(email);
 
@@ -123,8 +126,8 @@ public class ProfileActivity extends AppCompatActivity {
                     UpdateUser(email,nama.getText().toString(),alamat.getText().toString(),nohp.getText().toString(),"");
 
                 }else{
-                    UpdateUser(email,nama.getText().toString(),alamat.getText().toString(),nohp.getText().toString(),imageUri.toString());
-                    Toast.makeText(getApplicationContext(),imageUri.toString(),Toast.LENGTH_SHORT).show();
+                    UpdateUser(email,nama.getText().toString(),alamat.getText().toString(),nohp.getText().toString(),imageToString(bitmap));
+                    Toast.makeText(getApplicationContext(),imageToString(bitmap),Toast.LENGTH_SHORT).show();
 
                 }
 //                preferensi.setNamePreferensi(nama.getText().toString());
@@ -183,7 +186,6 @@ public class ProfileActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE,"New Picture");
         values.put(MediaStore.Images.Media.DESCRIPTION,"From tubes APP");
-        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
 
         //START CAMERA
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -195,8 +197,36 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            imageView.setImageURI(imageUri);
+            imageUri = data.getData();
+            Bundle extras = data.getExtras();
+            bitmap = (Bitmap) extras.get("data");
+            imageView.setImageBitmap(bitmap);
+            bitmap = getResizedBitmap(bitmap, 512);
+            Toast.makeText(getApplicationContext(),imageToString(bitmap),Toast.LENGTH_SHORT).show();
+
         }
+    }
+
+    private String imageToString(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        byte[] imgBytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgBytes,Base64.DEFAULT);
+    }
+
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 
     private void GetPreferensi(String email){
@@ -233,7 +263,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onResponse(retrofit2.Call<PreferensiResponse> call, Response<PreferensiResponse> response) {
 //                Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 // Sementara Response selalu return null jadi tak buat gini sek
-                Toast.makeText(ProfileActivity.this, "Berhasil Update", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 onBackPressed();
             }
 

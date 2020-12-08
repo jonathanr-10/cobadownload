@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.sammymanunggal.tugasBesarPBP.R;
-import com.sammymanunggal.tugasBesarPBP.adapter.UserRecyclerViewAdapter;
+
 import com.sammymanunggal.tugasBesarPBP.model.admin.ApiClient;
 import com.sammymanunggal.tugasBesarPBP.model.admin.ApiInterface;
 import com.sammymanunggal.tugasBesarPBP.model.admin.NewsDAO;
