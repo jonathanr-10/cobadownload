@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +20,7 @@ import com.sammymanunggal.tugasBesarPBP.model.orderticket.UpdateFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerViewAdapter.UserViewHolder>  {
+public class TicketRecyclerViewAdapter extends RecyclerView.Adapter<TicketRecyclerViewAdapter.UserViewHolder>  {
 
 
     private Context context;
@@ -27,7 +28,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
     private List<Transaksi> transaksiListFull;
 
 
-    public UserRecyclerViewAdapter(Context context, List<Transaksi> transaksiList){
+    public TicketRecyclerViewAdapter(Context context, List<Transaksi> transaksiList){
         this.context = context;
         this.transaksiList = transaksiList;
         transaksiListFull = new ArrayList<>(transaksiList);
@@ -53,7 +54,21 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
         holder.textTotal.setText(String.valueOf(transaksi.getTotal()));
         holder.textHarga.setText(String.valueOf(transaksi.getHarga()));
 
-        ;
+        holder.mParent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Bundle data = new Bundle();
+                Toast.makeText(context,transaksi.fullName,Toast.LENGTH_LONG).show();
+                data.putSerializable("transaksi", transaksi);
+                UpdateFragment updateFragment = new UpdateFragment();
+                updateFragment.setArguments(data);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame_layout_ticket, updateFragment)
+                        .commit();
+            }
+        });
 
     }
 
@@ -67,6 +82,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
     public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textView, textTotal, textMuseum, textHarga;
+        private LinearLayout mParent;
 
         public UserViewHolder(@NonNull View itemView){
             super(itemView);
@@ -74,6 +90,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             textTotal = itemView.findViewById(R.id.full_total_text);
             textMuseum = itemView.findViewById(R.id.full_museum_text);
             textHarga = itemView.findViewById(R.id.full_harga_text);
+            mParent = itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(this);
         }
 
@@ -81,7 +98,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
         public void onClick(View view) {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();
             Bundle data = new Bundle();
-            Transaksi transaksi = transaksiList.get(0);
+            Transaksi transaksi = transaksiList.get(getAdapterPosition());
             Toast.makeText(context,transaksi.fullName,Toast.LENGTH_LONG).show();
             data.putSerializable("user", transaksi);
             UpdateFragment updateFragment = new UpdateFragment();

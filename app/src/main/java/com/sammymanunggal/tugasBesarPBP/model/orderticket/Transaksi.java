@@ -4,25 +4,30 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 @Entity
 public class Transaksi implements Serializable {
-    @PrimaryKey(autoGenerate = true)
+    @SerializedName("id")
     public int id;
 
 
-    @ColumnInfo(name = "full_name")
+    @SerializedName("nama")
     public String fullName;
 
-    @ColumnInfo(name = "museum_name")
+    @SerializedName("emailUser")
+    public String emailUser;
+
+    @SerializedName("museum")
     public String museumName;
 
-    @ColumnInfo(name = "total")
+    @SerializedName("jumlah")
     public int total;
 
-    @ColumnInfo(name = "harga")
-    public int harga;
+    @SerializedName("harga")
+    public double harga;
 
     //@ColumnInfo(name = "status")
     //public String status;
@@ -59,11 +64,11 @@ public class Transaksi implements Serializable {
         this.total = total;
     }
 
-    public int getHarga(){
+    public double getHarga(){
         return harga;
     }
 
-    public void setHarga(int harga){
+    public void setHarga(double harga){
         this.harga = harga;
     }
 

@@ -44,9 +44,13 @@ public interface ApiInterface {
     @GET("transaksi")
     Call<TransaksiResponse> getAllTransaksi(@Query("data") String data);
 
-    @GET("transaksi/{id}")
-    Call<TransaksiResponse> getTransaksiById(@Path("id") String id,
+    @GET("transaksi/{email}")
+    Call<TransaksiResponse> getTransaksiByEmail(@Path("email") String email,
                                    @Query("data") String data);
+
+    @GET("transaksi/getbyId/{id}")
+    Call<TransaksiResponse> getTransaksiById(@Path("id") String id,
+                                                @Query("data") String data);
 
     @POST("transaksi")
     @FormUrlEncoded
@@ -56,12 +60,10 @@ public interface ApiInterface {
                                   @Field("jumlah")String jumlah,
                                   @Field("harga") String harga);
 
-    @PUT("transaksi/update/{email}")
+    @PUT("transaksi/update/{id}")
     @FormUrlEncoded
-    Call<TransaksiResponse> updateTransaksi(@Path("email") String email,
-                                        @Field("name")String name,
-                                            @Field("email") String email2,
-                                      @Field("museum")String museum,
+    Call<TransaksiResponse> updateTransaksi(@Path("id") int id,
+                                        @Field("nama")String name,
                                       @Field("jumlah") String jumlah,
                                       @Field("harga") String harga);
 

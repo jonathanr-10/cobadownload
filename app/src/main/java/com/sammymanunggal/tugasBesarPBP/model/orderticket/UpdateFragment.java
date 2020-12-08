@@ -43,7 +43,7 @@ public class UpdateFragment extends Fragment {
     private void update(final Transaksi transaksi){
 
         final String museum = transaksi.getMuseumName();
-        final int total= transaksi.getTotal();
+        final int total= Integer.parseInt(editTotal.getText().toString());
         int harga = 0;
         if( museum.equals("Museum Affandi") ){
             harga = 3000*total;
@@ -63,7 +63,7 @@ public class UpdateFragment extends Fragment {
 
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<TransaksiResponse> update = apiService.updateTransaksi(email,transaksi.getFullName(),email,museum,Integer.toString(transaksi.getTotal()),Double.toString(harga));
+        Call<TransaksiResponse> update = apiService.updateTransaksi(transaksi.getId(),editText.getText().toString(),editTotal.getText().toString(),Double.toString(harga));
 
 
         update.enqueue(new retrofit2.Callback<TransaksiResponse>() {
@@ -71,12 +71,16 @@ public class UpdateFragment extends Fragment {
             public void onResponse(retrofit2.Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
                 Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.hide(UpdateFragment.this).commit();
             }
 
             @Override
             public void onFailure(retrofit2.Call<TransaksiResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.hide(UpdateFragment.this).commit();
 
             }
         });
@@ -93,12 +97,16 @@ public class UpdateFragment extends Fragment {
             public void onResponse(retrofit2.Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
                 Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.hide(UpdateFragment.this).commit();
             }
 
             @Override
             public void onFailure(retrofit2.Call<TransaksiResponse> call, Throwable t) {
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.hide(UpdateFragment.this).commit();
 
             }
         });
@@ -118,7 +126,7 @@ public class UpdateFragment extends Fragment {
         SharedPreferences mSettings = getContext().getSharedPreferences("MyPref2", Context.MODE_PRIVATE);
         email = mSettings.getString("email", "missing");
 
-
+        transaksi = (Transaksi) getArguments().getSerializable("transaksi");
 
 
 

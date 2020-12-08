@@ -3,7 +3,6 @@ package com.sammymanunggal.tugasBesarPBP.model.orderticket;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,17 +20,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.sammymanunggal.tugasBesarPBP.R;
-import com.sammymanunggal.tugasBesarPBP.adapter.UserRecyclerViewAdapter;
+import com.sammymanunggal.tugasBesarPBP.adapter.TicketRecyclerViewAdapter;
 import com.sammymanunggal.tugasBesarPBP.model.admin.ApiClient;
 import com.sammymanunggal.tugasBesarPBP.model.admin.ApiInterface;
 //import com.sammymanunggal.tugasBesarPBP.database.DatabaseClient;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Response;
-
-import static com.mapbox.mapboxsdk.Mapbox.getApplicationContext;
 
 
 public class TicketFragment extends Fragment {
@@ -105,14 +100,14 @@ public class TicketFragment extends Fragment {
 
     private void getUsers() {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<TransaksiResponse> add = apiService.getTransaksiById(email,"data");
+        Call<TransaksiResponse> add = apiService.getTransaksiByEmail(email,"data");
 
 
         add.enqueue(new retrofit2.Callback<TransaksiResponse>() {
             @Override
             public void onResponse(retrofit2.Call<TransaksiResponse> call, Response<TransaksiResponse> response) {
                 //Toast.makeText(getContext(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                final UserRecyclerViewAdapter adapter = new UserRecyclerViewAdapter(TicketFragment.this.getContext(),response.body().getUsers());
+                final TicketRecyclerViewAdapter adapter = new TicketRecyclerViewAdapter(TicketFragment.this.getContext(),response.body().getUsers());
                 recyclerView.setAdapter(adapter);
                 dialog.dismiss();
 
