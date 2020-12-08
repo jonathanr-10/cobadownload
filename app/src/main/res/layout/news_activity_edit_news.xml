@@ -10,7 +10,7 @@
         android:id="@+id/navbarEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        >
 
         <ImageButton
             android:id="@+id/ibBackEdit"
@@ -113,7 +113,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+
         android:padding="20dp">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancelEdit"
@@ -135,7 +135,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/colorAccent"/>
+            android:backgroundTint="#2196F3"/>
     </RelativeLayout>
 
 

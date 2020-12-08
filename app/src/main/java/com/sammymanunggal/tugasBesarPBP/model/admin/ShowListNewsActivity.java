@@ -2,6 +2,7 @@ package com.sammymanunggal.tugasBesarPBP.model.admin;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -23,17 +24,17 @@ import retrofit2.Response;
 
 public class ShowListNewsActivity extends AppCompatActivity {
     private ImageButton ibBack;
+    private Button download;
     private RecyclerView recyclerView;
     private NewsRecyclerAdapter recyclerAdapter;
     private List<NewsDAO> user= new ArrayList<>();
-    private SearchView searchView;
     private SwipeRefreshLayout swipeRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news_activity_show_list_news);
-
+        download = findViewById(R.id.btn_downloadpdf);
         ibBack = findViewById(R.id.ibBack);
         ibBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +42,17 @@ public class ShowListNewsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        searchView = findViewById(R.id.searchUser);
+
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //BUTTON DOWNLOAD
+            }
+        });
+
+
+
         swipeRefresh=findViewById(R.id.swipeRefresh);
 
         swipeRefresh.setRefreshing(true);
@@ -82,18 +93,6 @@ public class ShowListNewsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerAdapter);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String queryString) {
-                recyclerAdapter.getFilter().filter(queryString);
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String queryString) {
-                recyclerAdapter.getFilter().filter(queryString);
-                return false;
-            }
-        });
     }
 }

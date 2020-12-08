@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/upper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+
+
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Headline3"
+            android:layout_width="386dp"
+            android:layout_height="wrap_content"
+            android:text="List News" />
+
+    </LinearLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshUser"
+        android:layout_below="@+id/upper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/showListNewsUser"
+            android:layout_below="@+id/upper">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</RelativeLayout>

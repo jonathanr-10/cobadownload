@@ -3,21 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
     tools:context=".model.admin.NewsMainActivity">
 
     <TextView
+        style="@style/TextAppearance.MaterialComponents.Headline2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-        android:text="MENU ADMIN"></TextView>
+        android:gravity="center"
+        android:layout_marginTop="80dp"
+        android:text="Menu Admin" />
+
     <RelativeLayout
         android:id="@+id/buttonmain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="327dp"
-        android:background="@color/colorAccent"
+
         android:padding="20dp">
 
         <com.google.android.material.button.MaterialButton
@@ -41,6 +45,28 @@
             android:backgroundTint="@color/colorAccent"
             android:text="List News"
             android:textColor="@color/black" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="227dp"
+
+        android:padding="20dp">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_LogoutAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/mapboxRed"
+            android:text="Logout"
+             />
     </RelativeLayout>
 
 </RelativeLayout>

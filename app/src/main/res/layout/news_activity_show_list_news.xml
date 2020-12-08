@@ -8,33 +8,46 @@
         android:id="@+id/upper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+
         android:orientation="vertical">
+
         <LinearLayout
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
+
             <ImageButton
                 android:id="@+id/ibBack"
-                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:background="@drawable/ic_baseline_arrow_back_24"/>
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/ic_baseline_arrow_back_24"
+                android:foreground="?android:attr/selectableItemBackground" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
                 android:layout_gravity="center_vertical"
-                android:textSize="18dp"
-                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:text="Show List News"
                 android:textColor="@color/black"
-                android:text="Show List News"/>
-
+                android:textSize="18dp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_downloadpdf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginRight="100dp"
+                android:backgroundTint="#2196F3"
+                android:text="Download PDF" />
 
         </LinearLayout>
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,17 +55,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
-            <SearchView
-                android:id="@+id/searchUser"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:iconifiedByDefault="false"
-                android:layout_marginLeft="10dp"
-                android:queryHint="Search User"
-                android:layout_marginRight="10dp">
-
-            </SearchView>
         </LinearLayout>
+
+
 
     </LinearLayout>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

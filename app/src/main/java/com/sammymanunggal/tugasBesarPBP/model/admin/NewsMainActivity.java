@@ -13,7 +13,7 @@ import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.SignIn;
 public class NewsMainActivity extends AppCompatActivity {
 
 
-    private MaterialButton btnAddMain, btnListMain;
+    private MaterialButton btnAddMain, btnListMain, btnLogout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,12 +21,13 @@ public class NewsMainActivity extends AppCompatActivity {
 
         btnAddMain = findViewById(R.id.btnAddMain);
         btnListMain= findViewById(R.id.btnListMain);
-
+        btnLogout= findViewById(R.id.btn_LogoutAdmin);
         btnAddMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NewsMainActivity.this, CreateNewsActivity.class);
                 startActivity(intent);
+                NewsMainActivity.this.finish();
             }
         });
 
@@ -34,6 +35,14 @@ public class NewsMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NewsMainActivity.this, ShowListNewsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NewsMainActivity.this, SignIn.class);
                 startActivity(intent);
             }
         });

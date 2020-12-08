@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sammymanunggal.tugasBesarPBP.R;
 import com.sammymanunggal.tugasBesarPBP.adapter.RecyclerViewAdapter;
+import com.sammymanunggal.tugasBesarPBP.model.newsUser.ShowListNewsUser;
 import com.sammymanunggal.tugasBesarPBP.model.orderticket.TicketFragment;
 
 
@@ -62,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
                             startActivity(intent);
                             break;
+                        case R.id.nav_news:
+                            selectedFragment= new ShowListNewsUser();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
+                                    selectedFragment).commit();
+                                break;
                         case R.id.nav_ticket:
                             selectedFragment= new TicketFragment();
                             getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
