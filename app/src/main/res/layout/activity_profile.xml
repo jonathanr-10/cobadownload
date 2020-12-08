@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/profile_nama"
-            android:inputType="number"
+            android:inputType="text"
             android:autofillHints=""
             android:hint="Nama"/>
 
@@ -98,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/profile_alamat"
-            android:inputType="number"
+            android:inputType="text"
             android:autofillHints=""
             android:hint="Nama"/>
 
