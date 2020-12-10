@@ -1,25 +1,5 @@
 package com.sammymanunggal.tugasBesarPBP.model.admin;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.SearchView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +7,21 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
@@ -39,7 +34,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.sammymanunggal.tugasBesarPBP.R;
-import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.SignUp;
+import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.Preferensi;
+import com.sammymanunggal.tugasBesarPBP.model.SignUpIn.PreferensiResponse;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,12 +51,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShowListNewsActivity extends AppCompatActivity {
+public class ShowUserActivity extends AppCompatActivity {
     private ImageButton ibBack;
 
     private RecyclerView recyclerView;
-    private NewsRecyclerAdapter recyclerAdapter;
-    private List<NewsDAO> user;
+    private UserListRecyclerAdapter recyclerAdapter;
+    private List<Preferensi> user= new ArrayList<>();
     private SwipeRefreshLayout swipeRefresh;
 
     private PdfViewModel pdfViewModel;
@@ -75,7 +71,7 @@ public class ShowListNewsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.news_activity_show_list_news);
+        setContentView(R.layout.activity_show_user);
 
         ibBack = findViewById(R.id.ibBack);
         ibBack.setOnClickListener(new View.OnClickListener() {
@@ -116,29 +112,29 @@ public class ShowListNewsActivity extends AppCompatActivity {
 
     public void loadUser(){
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<NewsResponse> call = apiService.getAllNews("data");
+        Call<PreferensiResponse> call = apiService.getAllUser("data");
 
-        call.enqueue(new Callback<NewsResponse>() {
+        call.enqueue(new Callback<PreferensiResponse>() {
             @Override
-            public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
-                user = response.body().getUsers();
+            public void onResponse(Call<PreferensiResponse> call, Response<PreferensiResponse> response) {
                 generateDataList(response.body().getUsers());
                 swipeRefresh.setRefreshing(false);
+                user=response.body().getUsers();
             }
 
             @Override
-            public void onFailure(Call<NewsResponse> call, Throwable t) {
-                Toast.makeText(ShowListNewsActivity.this,"Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<PreferensiResponse> call, Throwable t) {
+                Toast.makeText(ShowUserActivity.this,"Kesalahan Jaringan", Toast.LENGTH_SHORT).show();
                 swipeRefresh.setRefreshing(false);
             }
         });
 
     }
 
-    private void generateDataList(List <NewsDAO> customerList) {
+    private void generateDataList(List <Preferensi> customerList) {
         recyclerView = findViewById(R.id.userRecyclerView);
-        recyclerAdapter = new NewsRecyclerAdapter(this, customerList);
-        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(ShowListNewsActivity.this);
+        recyclerAdapter = new UserListRecyclerAdapter(this, customerList);
+        RecyclerView.LayoutManager layoutManager= new LinearLayoutManager(ShowUserActivity.this);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerAdapter);
@@ -204,7 +200,7 @@ public class ShowListNewsActivity extends AppCompatActivity {
                     Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(pdfIntent);
         } else {
-            Toast.makeText(ShowListNewsActivity.this, "Unduh pembuka PDF untuk menampilkan file ini", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ShowUserActivity.this, "Unduh pembuka PDF untuk menampilkan file ini", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -215,14 +211,14 @@ public class ShowListNewsActivity extends AppCompatActivity {
             Log.i(TAG, "Direktori baru untuk file pdf berhasil dibuat");
         }
         //TODO 2.1 - Ubah NPM menjadi NPM anda
-        String pdfname = "DataNewsMuseumJogjaPBPF-G"+".pdf";
+        String pdfname = "DataPenggunaMuseumJogjaPBPF-G"+".pdf";
         pdfFile = new File(docsFolder.getAbsolutePath(), pdfname);
         OutputStream output = new FileOutputStream(pdfFile);
         com.itextpdf.text.Document document = new com.itextpdf.text.Document(PageSize.A4);
         writer = PdfWriter.getInstance(document, output);
         document.open();
         //TODO 2.2 - Ubah XXXX menjadi NPM anda
-        Paragraph judul = new Paragraph(" SURAT KETERANGAN PEMBUATAN NEWS PADA APLIKASI MUSEUMJOGJA Kelompok G PBP F \n\n", new
+        Paragraph judul = new Paragraph(" SURAT KETERANGAN PENGGUNA APLIKASI MUSEUMJOGJA Kelompok G PBP F \n\n", new
                 com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 16,
                 com.itextpdf.text.Font.BOLD, BaseColor.BLACK));
         judul.setAlignment(Element.ALIGN_CENTER);
@@ -258,7 +254,7 @@ public class ShowListNewsActivity extends AppCompatActivity {
         com.itextpdf.text.Font f = new
                 com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 10,
                 com.itextpdf.text.Font.NORMAL, BaseColor.BLACK);
-        Paragraph Pembuka = new Paragraph("\nBerikut data berita yang sudah dibuat \n\n",f);
+        Paragraph Pembuka = new Paragraph("\nBerikut data user yang sudah menggunakan aplikasi MuseumJogja \n\n",f);
         Pembuka.setIndentationLeft(20);
         document.add(Pembuka);
         PdfPTable tableHeader = new PdfPTable(new float[]{1,5,5});
@@ -269,13 +265,13 @@ public class ShowListNewsActivity extends AppCompatActivity {
         tableHeader.setWidthPercentage(100);
 
         //TODO 2.5 - Bagian ini tidak perlu diubah
-        PdfPCell h1 = new PdfPCell(new Phrase("Judul Berita"));
+        PdfPCell h1 = new PdfPCell(new Phrase("Email"));
         h1.setHorizontalAlignment(Element.ALIGN_CENTER);
         h1.setPaddingBottom(5);
-        PdfPCell h2 = new PdfPCell(new Phrase("Tanggal Berita"));
+        PdfPCell h2 = new PdfPCell(new Phrase("Nama"));
         h2.setHorizontalAlignment(Element.ALIGN_CENTER);
         h2.setPaddingBottom(5);
-        PdfPCell h4 = new PdfPCell(new Phrase("Isi Berita"));
+        PdfPCell h4 = new PdfPCell(new Phrase("Nomor HP"));
         h4.setHorizontalAlignment(Element.ALIGN_CENTER);
         h4.setPaddingBottom(5);
         tableHeader.addCell(h1);
@@ -296,11 +292,11 @@ public class ShowListNewsActivity extends AppCompatActivity {
         for(int x=0;x<arrLength;x++){
             for(int i=0;i<cells.length;i++){
                 if(i==0){
-                    tableData.addCell(user.get(x).getBerita());
+                    tableData.addCell(user.get(x).getEmailPreferensi());
                 }else if(i==1){
-                    tableData.addCell(user.get(x).getTanggal());
+                    tableData.addCell(user.get(x).getNamePreferensi());
                 }else{
-                    tableData.addCell(user.get(x).getIsi());
+                    tableData.addCell(user.get(x).getPhoneNumber());
                 }
             }
         }

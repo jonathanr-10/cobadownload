@@ -47,12 +47,32 @@
             android:textColor="@color/black" />
     </RelativeLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="227dp"
+
+        android:padding="20dp">
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_ShowListUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/mapboxRed"
+            android:text="List User"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="150dp"
 
         android:padding="20dp">
 
